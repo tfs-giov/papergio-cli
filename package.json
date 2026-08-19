@@ -1,6 +1,6 @@
 {
   "name": "@papergio/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create production-minded, agent-ready project foundations with the Papergio CLI.",
   "keywords": [
     "papergio",

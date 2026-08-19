@@ -1,9 +1,12 @@
 import { buildFiles as buildSaasFiles } from './saas.js';
+import { createRequire } from 'node:module';
+
+const VERSION = createRequire(import.meta.url)('../../package.json').version;
 
 const templates = {
   saas: {
     name: 'SaaS',
-    version: '0.1.0',
+    version: VERSION,
     description: 'Next.js + Supabase + Vercel foundation',
     build: buildSaasFiles
   }

@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { createServer } from 'node:net';
+import { createRequire } from 'node:module';
 import { confirmPrompt, option, selectPrompt } from './prompts.js';
 import { inspectProject } from './inspect.js';
 import { doctor } from './doctor.js';
@@ -11,7 +12,7 @@ import { verifyProject } from './verify.js';
 import { getTemplate, listTemplates } from './templates/index.js';
 import { FoundryError, formatError } from './errors.js';
 
-const VERSION = '0.1.0';
+const VERSION = createRequire(import.meta.url)('../package.json').version;
 const args = process.argv.slice(2);
 const command = args[0];
 const projectName = args[1];
