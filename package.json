@@ -18,7 +18,7 @@
   "homepage": "https://docs.papergio.com.br/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tfs-giov/papergio-cli.git"
+    "url": "git+https://github.com/tfs-giov/papergio-cli.git"
   },
   "bugs": {
     "url": "https://github.com/tfs-giov/papergio-cli/issues"
