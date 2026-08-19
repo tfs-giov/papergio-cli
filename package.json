@@ -1,7 +1,37 @@
 {
   "name": "@papergio/cli",
-  "version": "0.1.0",
-  "description": "Papergio CLI for project foundations and agent-ready development.",
+  "version": "0.1.1",
+  "description": "Create production-minded, agent-ready project foundations with the Papergio CLI.",
+  "keywords": [
+    "papergio",
+    "ai-agents",
+    "coding-agents",
+    "agent-ready",
+    "project-foundation",
+    "scaffolding",
+    "saas",
+    "nextjs",
+    "supabase",
+    "developer-tools",
+    "cli"
+  ],
+  "homepage": "https://docs.papergio.com.br/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tfs-giov/papergio-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tfs-giov/papergio-cli/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "dependencies": {
     "enquirer": "^2.4.1"

@@ -1,51 +1,96 @@
 # Papergio CLI
 
-Papergio CLI generates coherent project foundations for AI-assisted development. Foundry is the internal classifier for the foundation engine and remains available as a compatibility command.
+Create a strong starting point for your next product — with the boring, important pieces already connected.
 
-The CLI orchestration lives in `src/cli.js`; prompts, inspection, and the SaaS template are kept in separate modules under `src/`.
+Papergio CLI generates production-minded project foundations for humans and coding agents. It gives a new project structure, conventions, auth boundaries, database wiring, verification, and agent context before feature work begins.
 
-## Prototype
+[![npm version](https://img.shields.io/npm/v/@papergio/cli?color=ff4d3d&label=npm)](https://www.npmjs.com/package/@papergio/cli)
+[![CI](https://github.com/tfs-giov/papergio-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/tfs-giov/papergio-cli/actions)
+[![License](https://img.shields.io/badge/license-MIT-111111.svg)](LICENSE)
+
+> Foundry is Papergio's internal classifier for foundation types. The public project manifest is `papergio.yaml`.
+
+## Start here
 
 ```bash
-node src/cli.js init my-app
+npm install -g @papergio/cli
+papergio init my-saas --preset saas --ui shadcn --yes --json
+cd my-saas
+papergio inspect --json
+papergio verify --json
 ```
 
-The terminal lets you choose the preset and UI layer with the arrow keys. The `saas` preset generates a neutral Next.js project with Supabase Auth/Postgres foundations, minimal auth/dashboard/admin routes, Vercel, Git, GitHub Actions, `AGENTS.md`, and a canonical `papergio.yaml` manifest. `foundry.yaml` is also generated as a temporary compatibility copy for older Foundry tooling.
-
-For agents and CI, use deterministic flags:
+Prefer not to install globally?
 
 ```bash
-node src/cli.js init my-app --preset saas --ui minimal --yes --json
-cd my-app
-node ../src/cli.js verify --json
+npx @papergio/cli init my-saas --preset saas --ui shadcn --yes --json
 ```
 
-Inspect a generated project:
+The interactive version is also available:
 
 ```bash
-node src/cli.js inspect
-node src/cli.js inspect --json
+papergio init my-app
 ```
 
-Connect local projects to provider CLIs:
+## What it creates
+
+The `saas` foundation starts with a neutral, adaptable base for product work:
+
+- Next.js application structure with a clear route boundary
+- Supabase Auth, Postgres, migrations, and profile foundation
+- Protected user and admin areas with server-side checks
+- Vercel, Git, and GitHub Actions project wiring
+- `AGENTS.md` for durable context across coding agents
+- `papergio.yaml` describing the selected foundation and providers
+- `foundry.yaml` as a compatibility copy for older internal tooling
+- verification commands that expose missing setup instead of hiding it
+
+Papergio creates the local foundation. Your product decisions, visual identity, domain logic, and provider credentials remain yours.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `papergio init <name>` | Generate a project from a versioned foundation |
+| `papergio inspect` | Summarize the generated manifest and stack |
+| `papergio doctor` | Check local tools and integration readiness |
+| `papergio verify` | Run foundation, provider, Git, and build checks |
+| `papergio connect` | Inspect or explicitly link provider tooling |
+
+Use `--json` for machine-readable output in CI and agent workflows.
 
 ```bash
-node src/cli.js connect
-node src/cli.js connect supabase --link --json
-node src/cli.js connect vercel --link --json
-node src/cli.js connect github --create-repo --repo my-account/my-app --push
+papergio doctor --json
+papergio connect supabase --link --json
+papergio connect vercel --link --json
+papergio connect github --create-repo --repo my-account/my-app --push
 ```
 
-`connect` checks installed CLIs and authentication, asks for confirmation before external actions, and stores non-secret local state in `.foundry/connections.json`. Provider credentials should come from the provider CLI or environment variables such as `SUPABASE_ACCESS_TOKEN`, `VERCEL_TOKEN`, and `GH_TOKEN`.
+Provider actions stay explicit. `connect` checks installed CLIs and authentication, asks before external actions, and stores only non-secret local state in `.foundry/connections.json`. Credentials should come from provider CLIs or environment variables such as `SUPABASE_ACCESS_TOKEN`, `VERCEL_TOKEN`, and `GH_TOKEN`.
 
-Run the CLI test suite:
+## Foundation presets
+
+The first public release includes the `saas` preset and four UI layers:
 
 ```bash
+papergio init my-saas --preset saas --ui shadcn --yes
+```
+
+Available UI layers are `shadcn`, `tailwind`, `minimal`, and `none`. They keep the generated product neutral enough for an agent or team to shape later.
+
+## Development
+
+```bash
+git clone https://github.com/tfs-giov/papergio-cli.git
+cd papergio-cli
+npm install
 npm test
 ```
 
-The generated SaaS project includes server-side Supabase session checks, route protection through `src/proxy.ts`, basic `user`/`admin` authorization, and an initial profile migration.
+Papergio CLI requires Node.js 18 or newer.
 
-`verify` reports structural checks, environment warnings, provider links, Git remotes, and runs the real build when `node_modules` is available. Missing `.env.local`, provider CLIs, or remotes are reported as warnings instead of being silently ignored.
+## Current scope
 
-The CLI does not create remote Supabase, Vercel, or GitHub resources yet. It prepares the local project for those integrations.
+This is an early public release. The CLI prepares local projects and integration boundaries; it does not silently create remote Supabase, Vercel, or GitHub resources. Use `papergio connect` when you are ready to link or create them explicitly.
+
+Read the [Papergio Docs](https://docs.papergio.com.br/), browse the [Papergio Tools](https://tools.papergio.com.br/), or open an [issue](https://github.com/tfs-giov/papergio-cli/issues) with feedback.
