@@ -23,8 +23,14 @@ test('generates every supported UI variant and passes structural verification', 
       assert.equal(verify.status, 0, verify.stderr);
       const papergioManifest = readFileSync(join(project, 'papergio.yaml'), 'utf8');
       const manifest = readFileSync(join(project, 'foundry.yaml'), 'utf8');
+      const generatedPackage = JSON.parse(readFileSync(join(project, 'package.json'), 'utf8'));
+      const generatedGitignore = readFileSync(join(project, '.gitignore'), 'utf8');
       assert.match(papergioManifest, /schema: papergio\/v1/);
       assert.equal(papergioManifest, manifest);
+      assert.equal(generatedPackage.dependencies.next, '16.3.1');
+      assert.doesNotMatch(JSON.stringify(generatedPackage), /"latest"/);
+      assert.match(generatedGitignore, /\.env\.\*/);
+      assert.match(generatedGitignore, /!\.env\.example/);
       assert.match(manifest, new RegExp(`provider: ${ui}`));
       const supabaseConfig = readFileSync(join(project, 'supabase', 'config.toml'), 'utf8');
       assert.match(supabaseConfig, /project_id = "app-/);
